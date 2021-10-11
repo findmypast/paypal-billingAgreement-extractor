@@ -7,7 +7,9 @@ This code represents a spike to determine the feasibility of the task.
 To Execute, simply run the following commands:
 
 Install dependencies
-`npm i`
+`yarn install`
+
+Copy in the required secrets from vault, as directed in the code.
 
 Run the Application
-`Node App.js`
+`Node src/app.js`
