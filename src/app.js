@@ -16,6 +16,7 @@ const paymentToken = "string_representing_token";
 
 const stream = gateway.customer.search(
   (search) => {
+    // Examples of actual payment tokens can be found in the futurepay table.
     search.paymentMethodToken().is(paymentToken);
   },
   (err, response) => {
