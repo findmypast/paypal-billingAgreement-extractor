@@ -12,4 +12,4 @@ Install dependencies
 Copy in the required secrets from vault, as directed in the code.
 
 Run the Application
-`Node src/app.js`
+`yarn start -- path/to/input.csv'

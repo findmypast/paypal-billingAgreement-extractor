@@ -1,8 +1,13 @@
 {
   "name": "paypal-token-extractor",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "",
+  "main": "src/app.js",
   "license": "MIT",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "jest --runInBand"
+  },
   "devDependencies": {
     "jest": "^27.2.4"
   },
