@@ -12,6 +12,7 @@
     "jest": "^27.2.4"
   },
   "dependencies": {
-    "braintree": "^3.7.0"
+    "braintree": "^3.7.0",
+    "csv-parse": "^4.16.3"
   }
 }
