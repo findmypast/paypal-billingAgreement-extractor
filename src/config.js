@@ -1,3 +1,8 @@
+const SQL_CONFIG_USER = "user";
+const SQL_pASSWORD = "password";
+const SQL_DATABASE = "database";
+const SQL_SERVER = "server";
+
 const createConfig = () => {
   if (process.env.NODE_ENV !== "production") {
     return {
@@ -14,4 +19,11 @@ const createConfig = () => {
   }
 };
 
-module.exports = { createConfig };
+const sqlConfig = {
+  user: SQL_CONFIG_USER,
+  password: SQL_pASSWORD,
+  database: SQL_DATABASE,
+  server: SQL_SERVER,
+};
+
+module.exports = { createConfig, sqlConfig };

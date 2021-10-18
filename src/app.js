@@ -1,7 +1,10 @@
 const braintree = require("braintree");
 const fs = require("fs");
 const parse = require("csv-parse/lib/sync");
+const sql = require("mssql");
+
 // import { parse } from "csv-parse/sync";
+import { sqlConfig } from "./config";
 
 // Load a whole file into memory
 
@@ -23,7 +26,7 @@ const main = async (inputFilename) => {
   // Establish a connection to Braintree Gateway
   var gateway = new braintree.BraintreeGateway({
     //token value, stored in vault, integration token found at the following location
-    accessToken: "'paypal/tokens/fmp/gbp/integration'",
+    accessToken: "paypal/tokens/fmp/gbp/integration",
   });
   const timer = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -90,3 +93,17 @@ const main = async (inputFilename) => {
 
   process.stdout.write("...done\n");
 })();
+
+//  Populate db
+// async () => {
+//   try {
+//     await sql.connect(sqlConfig);
+//     const result =
+//       await sql.query`INSERT INTO [HappyGeneral_integration].[dbo].[future_pay](paypal_billing_agreement_id)
+//     VALUES ('')
+//     WHERE future_pay_id = 'asdqwe'`;
+//     console.dir(result);
+//   } catch (err) {
+//     // ... error checks
+//   }
+// };
