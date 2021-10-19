@@ -9,7 +9,43 @@ To Execute, simply run the following commands:
 Install dependencies
 `yarn install`
 
-Copy in the required secrets from vault, as directed in the code.
+Copy in the required secrets from vault into a file called secrets.json at the top level of the directory. It should have the following format:
+
+{
+    "uk_ie": {
+        "integration": "paypal/integration-payment-gateway-config/uk-ie",
+        "production": "paypal/production-payment-gateway-config/uk-ie"
+    },
+    "au": {
+        "integration": "paypal/integration-payment-gateway-config/au",
+        "production": "paypal/production-payment-gateway-config/au"
+    },
+    "us": {
+        "integration": "paypal/integration-payment-gateway-config/us",
+        "production": "paypal/production-payment-gateway-config/us"
+    },
+    "sqlConfig" : {
+        "integration" : {
+            "user": "fmp/integration/db/fh1-mssqlt01.dun.fh/username",
+            "password": "fmp/integration/db/fh1-mssqlt01.dun.fh/password",
+            "database": "HappyGeneral_integration",
+            "server": "fmp/integration/db/fh1-mssqlt01.dun.fh/server",
+            "options": {
+              "trustServerCertificate": true
+            }
+        },
+        "production" : {
+            "user": "fmp/production/db/fh1-mssql02.dun.fh/username",
+            "password": "fmp/production/db/fh1-mssql02.dun.fh/password",
+            "database": "fmp_future_pay",
+            "server": "fmp/production/db/fh1-mssql02.dun.fh/server",
+            "options": {
+              "trustServerCertificate": true
+            }
+        }
+
+    }
+}
 
 Run the Application
 `yarn start -- path/to/input.csv'

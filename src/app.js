@@ -19,7 +19,7 @@ const main = async (inputFilename) => {
     accessToken: secrets.uk_ie.integration,
   });
 
-  await sql.connect(secrets.sqlConfig);
+  await sql.connect(secrets.sqlConfig.integration);
 
   const timer = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -41,13 +41,13 @@ const main = async (inputFilename) => {
                 customer.paypalAccounts[0].billingAgreementId
               }\n`
             );
-            // try {
-            //   const result = await sql.query(`UPDATE future_pay
-            //       SET paypal_billing_agreement_id = '${customer.paypalAccounts[0].billingAgreementId}'
-            //       WHERE [future_pay_id] = '${token[0]}';`);
-            // } catch (err) {
-            //   // ... error checks
-            // }
+            try {
+              const result = await sql.query(`UPDATE future_pay
+                  SET paypal_billing_agreement_id = '${customer.paypalAccounts[0].billingAgreementId}'
+                  WHERE [future_pay_id] = '${token[0]}';`);
+            } catch (err) {
+              // ... error checks
+            }
           } else {
             process.stdout.write(`${outputCount++} ${token[0]}\n`);
             failedCount++;
