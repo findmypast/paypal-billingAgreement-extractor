@@ -47,9 +47,15 @@ Copy in the required secrets from vault into a file called secrets.json at the t
     }
 }
 
-Run the Application
+This solution has two parts, one that retrieves the BillingAgreements, and one that saves Billingagreements into the database. 
+
+Run the Retrieval Application
 `yarn start -- path/to/input.csv'
-e.g. `yarn start 'test-input/100-test-input.csv'`
+e.g. `yarn retrieve test-input/100-test-input.csv`
+
+Run the Save Application
+`yarn start -- path/to/input.csv'
+e.g. `yarn retrieve test-input/100-test-input.csv`
 
 # Notes
 To test, we are using the integration database. It's quicker to get the meat of the task, not to mention the future_pay table will become void. In integration, BNA/Genes/FMP all use the happyGeneral_integration DB, and share the future_pay table. The values for each system are differentiated by site_key. FMP = 60, BNA = 55, Genes = 3.

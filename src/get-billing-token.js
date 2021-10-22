@@ -16,27 +16,23 @@ const main = async (inputFilename) => {
   const outputProgressFilePath = path.join(
     __dirname,
     path.sep,
-    "../pp-billingAgreementId-retrieval-progress_first70k.csv"
+    "../pp-billingAgreementId-retrieval-progress.csv"
   );
 
   const failedRetrievalFilePath = path.join(
     __dirname,
     path.sep,
-    "../pp-billingAgreementId-retrieval-failed_first70k.csv"
+    "../pp-billingAgreementId-retrieval-failed.csv"
   );
-
-  if (!fs.existsSync(outputProgressFilePath)) {
-    fs.appendFileSync(outputProgressFilePath, "BillingAgreementId");
-  }
 
   // Establish a connection to Braintree Gateway
   var gateway = new braintree.BraintreeGateway({
     //token value, stored in vault, integration token found at the following location uk
-    accessToken: secrets.uk_ie.production,
+    accessToken: secrets.uk_ie.integration,
   });
 
   // Connect to FuturePay DB
-  await sql.connect(secrets.sqlConfig.production);
+  await sql.connect(secrets.sqlConfig.integration);
 
   // A function to block processing by a specified amount of time
   const timer = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -63,9 +59,7 @@ const main = async (inputFilename) => {
                 `${token[0]},${customer.paypalAccounts[0].billingAgreementId},`
               );
             } else {
-              console.log(error);
               writeToOutputFile(failedRetrievalFilePath, `${token[0]},`);
-              failedCount++;
             }
           });
         }
