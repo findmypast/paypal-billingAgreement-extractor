@@ -3,12 +3,11 @@ const parse = require("csv-parse/lib/sync");
 const sql = require("mssql");
 const secrets = require("../secrets.json");
 const writeToOutputFile = require("./write-to-output-file");
-const readOutputFile = require("./read-output-file");
 const path = require("path");
 
 const main = async (inputFilename) => {
   var inputFile = fs.readFileSync(`./${inputFilename}`);
-  var tokens = parse(inputFile);
+  var inputCsv = parse(inputFile);
 
   let requestCount = 1;
 
@@ -28,16 +27,24 @@ const main = async (inputFilename) => {
   await sql.connect(secrets.sqlConfig.production);
 
   const startTime = process.hrtime.bigint();
-  for (const token of tokens) {
+  for (const inputLine of inputCsv) {
+    const [paymentGatewayToken, billingAgreementId] = inputLine;
+
     try {
       await sql.query(`UPDATE future_pay
-                      SET paypal_billing_agreement_id = '${token[1]}'
-                      WHERE [future_pay_id] = '${token[0]}';`);
+                      SET paypal_billing_agreement_id = '${billingAgreementId}'
+                      WHERE [future_pay_id] = '${paymentGatewayToken}';`);
 
-      writeToOutputFile(outputProgressFilePath, `${token[0]},${token[1]},`);
+      writeToOutputFile(
+        outputProgressFilePath,
+        `${paymentGatewayToken},${billingAgreementId},`
+      );
       requestCount++;
     } catch (err) {
-      writeToOutputFile(failedRetrievalFilePath, `${token[0]},${token[1]},`);
+      writeToOutputFile(
+        failedRetrievalFilePath,
+        `${paymentGatewayToken},${billingAgreementId},`
+      );
     }
 
     if (requestCount % 100 === 0) {

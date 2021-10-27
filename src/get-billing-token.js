@@ -4,12 +4,11 @@ const parse = require("csv-parse/lib/sync");
 const sql = require("mssql");
 const secrets = require("../secrets.json");
 const writeToOutputFile = require("./write-to-output-file");
-const readOutputFile = require("./read-output-file");
 const path = require("path");
 
 const main = async (inputFilename) => {
   var inputFile = fs.readFileSync(`./${inputFilename}`);
-  var tokens = parse(inputFile);
+  var inputCsv = parse(inputFile);
 
   let requestCount = 1;
 
@@ -39,7 +38,9 @@ const main = async (inputFilename) => {
 
   const startTime = process.hrtime.bigint();
 
-  for (const token of tokens) {
+  for (const inputLine of inputCsv) {
+    const [paymentGatewayToken] = inputLine;
+
     if (requestCount % 10 === 0) {
       // Due to rate limiting on the BrainTree SDK, we must stagger the calls to the api by adding a block of 150ms every 10 requests
       await timer(150);
@@ -49,17 +50,20 @@ const main = async (inputFilename) => {
       gateway.customer.search(
         async (search) => {
           // Examples of actual payment tokens can be found in the futurepay table.
-          search.paymentMethodToken().is(token[0]);
+          search.paymentMethodToken().is(paymentGatewayToken);
         },
         (error, response) => {
           response.first(async (err, customer) => {
             if (customer) {
               writeToOutputFile(
                 outputProgressFilePath,
-                `${token[0]},${customer.paypalAccounts[0].billingAgreementId},`
+                `${paymentGatewayToken},${customer.paypalAccounts[0].billingAgreementId},`
               );
             } else {
-              writeToOutputFile(failedRetrievalFilePath, `${token[0]},`);
+              writeToOutputFile(
+                failedRetrievalFilePath,
+                `${paymentGatewayToken},`
+              );
             }
           });
         }
