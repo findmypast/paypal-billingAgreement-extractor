@@ -27,10 +27,10 @@ Copy in the required secrets from vault into a file called secrets.json at the t
     },
     "sqlConfig" : {
         "integration" : {
-            "user": "fmp/integration/db/fh1-mssqlt01.dun.fh/username",
-            "password": "fmp/integration/db/fh1-mssqlt01.dun.fh/password",
+            "user": "fmp/integration/db/fh1-mssql-t01.dun.fh/username",
+            "password": "fmp/integration/db/fh1-mssql-t01.dun.fh/password",
             "database": "HappyGeneral_integration",
-            "server": "fmp/integration/db/fh1-mssqlt01.dun.fh/server",
+            "server": "fmp/integration/db/fh1-mssql-t01.dun.fh/server",
             "options": {
               "trustServerCertificate": true
             }
