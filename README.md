@@ -36,10 +36,10 @@ Copy in the required secrets from vault into a file called secrets.json at the t
             }
         },
         "production" : {
-            "user": "fmp/production/db/fh1-mssql02.dun.fh/username",
-            "password": "fmp/production/db/fh1-mssql02.dun.fh/password",
+            "user": "fmp/production/db/fh1-mssql-s01.dun.fh/username",
+            "password": "fmp/production/db/fh1-mssql-s01.dun.fh/password",
             "database": "fmp_future_pay",
-            "server": "fmp/production/db/fh1-mssql02.dun.fh/server",
+            "server": "fmp/production/db/fh1-mssql-s01.dun.fh/server",
             "options": {
               "trustServerCertificate": true
             }
