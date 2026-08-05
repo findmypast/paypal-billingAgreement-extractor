@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "retrieve": "node src/get-billing-token.js",
+    "retrieve:bna": "node src/get-bna-billing-token.js",
     "save": "node src/save-billing-token.js",
     "test": "jest --runInBand"
   },
