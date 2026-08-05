@@ -25,6 +25,10 @@ Copy in the required secrets from vault into a file called secrets.json at the t
         "integration": "paypal/integration-payment-gateway-config/us",
         "production": "paypal/production-payment-gateway-config/us"
     },
+    "bna": {
+        "integration": "paypal/integration-payment-gateway-config",
+        "production": "paypal/production-payment-gateway-config"
+    },
     "sqlConfig" : {
         "integration" : {
             "user": "fmp/integration/db/fh1-mssql-t01.dun.fh/username",
@@ -50,9 +54,10 @@ Copy in the required secrets from vault into a file called secrets.json at the t
 
 # Overview
 
-This solution has two parts, one that retrieves the BillingAgreements, and one that saves Billingagreements into the database. 
+This solution has two parts, one that retrieves the BillingAgreements, and one that saves Billingagreements into the database.
 
 ## Retrieve Paypal Billing Agreement Id's
+
 Run the Retrieval Application
 `yarn retrieve -- path/to/input.csv'
 e.g. `yarn retrieve test-input/100-test-input.csv`
@@ -67,6 +72,8 @@ e.g. `yarn save test-input/pp-billingAgreementId-retrieval-progress.csv`
 
 The save function will take a csv of Braintree PaymentGatewayToken, Paypal BillingAgreementId, where it will save the BillingAgreementId to the paypal_billing_agreement_id column of the row corresponding to the specified PaymentGatewayToken.
 
-Both of these functions produce two output files, one that outputs the progress, which is successful attempts, and another listing the failed attempts. 
+Both of these functions produce two output files, one that outputs the progress, which is successful attempts, and another listing the failed attempts.
+
 # Notes
+
 To test, we are using the integration database. It's quicker to get the meat of the task, not to mention the future_pay table will become void. In integration, BNA/Genes/FMP all use the happyGeneral_integration DB, and share the future_pay table. The values for each system are differentiated by site_key. FMP = 60, BNA = 55, Genes = 3.
