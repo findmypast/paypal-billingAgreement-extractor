@@ -25,7 +25,10 @@ Copy in the required secrets from vault into a file called secrets.json at the t
         "integration": "paypal/integration-payment-gateway-config/us",
         "production": "paypal/production-payment-gateway-config/us"
     },
-    "bna": { "integration": "<BNA GBP sandbox access token>", "production": "<BNA GBP production access token>" },
+    "bna": {
+        "integration": "paypal/integration-payment-gateway-config",
+        "production": "paypal/production-payment-gateway-config"
+    },
     "sqlConfig" : {
         "integration" : {
             "user": "fmp/integration/db/fh1-mssql-t01.dun.fh/username",
